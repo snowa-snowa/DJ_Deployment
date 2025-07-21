@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRUD Панель</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .neon-hover {
+      transition: box-shadow 0.5s ease;
+    }
+
+    .underline-hover {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .underline-hover::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, #000000, #6b21a8);
+      transition: width 0.4s ease;
+    }
+
+    .underline-hover:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col">
+
+<!-- 🔹 Навбар -->
+<nav class="bg-[#111] shadow">
+  <div class="container mx-auto flex justify-between items-center py-6 px-12 text-3xl font-bold">
+
+    <!-- Левая ссылка -->
+    <a href="{% url 'index' %}" class="underline-hover hover:text-white">
+      Меню
+    </a>
+
+    <!-- Центр — название -->
+    <a href="/admin/" target="_blank" class="underline-hover hover:text-white">
+      Страница CRUD
+    </a>
+
+    <!-- Правая ссылка -->
+    <a href="{% url 'mvt-index' %}" class="underline-hover hover:text-white">
+      MVT
+    </a>
+
+  </div>
+</nav>
+
+  <!-- 🔹 Контент -->
+<main class="flex-1 container mx-auto px-6 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+    <!-- 🔸 Один к одному -->
+    <div class="bg-[#111] p-10 rounded-xl shadow neon-hover text-center min-h-[280px] hover:shadow-[0_0_50px_rgba(0,255,255,0.3)] transition duration-300">
+      <h2 class="text-2xl font-bold mb-2">Один к одному</h2>
+      <hr class="border-t border-[#333] mb-6">
+      <div class="space-y-4 text-2xl italic font-semibold">
+        <a href="{% url 'person-list' %}" class="inline-block underline-hover text-white">
+          Person
+        </a><br>
+        <a href="{% url 'passport-list' %}" class="inline-block underline-hover text-white">
+          Passport
+        </a>
+      </div>
+    </div>
+
+    <!-- 🔸 Один ко многим -->
+    <div class="bg-[#111] p-10 rounded-xl shadow neon-hover text-center min-h-[280px] hover:shadow-[0_0_50px_rgba(0,255,255,0.3)] transition duration-300">
+      <h2 class="text-2xl font-bold mb-2">Один ко многим</h2>
+      <hr class="border-t border-[#333] mb-6">
+      <div class="space-y-4 text-2xl italic font-semibold">
+        <a href="{% url 'author-list' %}" class="inline-block underline-hover text-white">
+          Author
+        </a><br>
+        <a href="{% url 'book-list' %}" class="inline-block underline-hover text-white">
+          Book
+        </a>
+      </div>
+    </div>
+
+    <!-- 🔸 Многие ко многим -->
+    <div class="bg-[#111] p-10 rounded-xl shadow neon-hover text-center min-h-[280px] hover:shadow-[0_0_50px_rgba(0,255,255,0.3)] transition duration-300">
+      <h2 class="text-2xl font-bold mb-2">Многие ко многим</h2>
+      <hr class="border-t border-[#333] mb-6">
+      <div class="space-y-4 text-2xl italic font-semibold">
+        <a href="{% url 'course-list' %}" class="inline-block underline-hover text-white">
+          Course
+        </a><br>
+        <a href="{% url 'student-list' %}" class="inline-block underline-hover text-white">
+          Student
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+  <!-- 🔹 Футер -->
+  <footer class="bg-[#111] text-center py-4">
+    <a href="https://github.com/USERNAME/REPO"
+       class="underline-hover italic text-gray-400 transition-colors duration-300">
+      Версия 1.0.4
+    </a>
+  </footer>
+
+</body>
+</html>

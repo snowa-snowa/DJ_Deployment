@@ -1,0 +1,15 @@
+{% extends "crud_app/base.html" %}
+{% block title %}Форма Book{% endblock %}
+{% block content %}
+  <div class="form-container">
+    <h2>Добавить / Изменить Book</h2>
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="flex space-x-4">
+        <button type="submit" class="btn-animated">Сохранить</button>
+        <a href="{% url 'book-list' %}" class="btn-animated">Отмена</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

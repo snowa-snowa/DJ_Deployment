@@ -1,0 +1,12 @@
+{% extends "crud_app/base.html" %}
+{% block title %}Удалить Book{% endblock %}
+{% block content %}
+  <div class="form-container">
+    <h2>Удалить {{ object.title }}?</h2>
+    <form method="post" class="flex space-x-4">
+      {% csrf_token %}
+      <button type="submit" class="btn-animated">Да, удалить</button>
+      <a href="{% url 'book-detail' object.pk %}" class="btn-animated">Отмена</a>
+    </form>
+  </div>
+{% endblock %}
