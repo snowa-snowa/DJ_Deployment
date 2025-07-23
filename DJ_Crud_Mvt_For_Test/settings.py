@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+
+
 import dj_database_url
 from django.conf.global_settings import DATABASES
 from environ import Env
@@ -18,20 +20,21 @@ from environ import Env
 import os
 import environ
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 1) Инициализируем Env с указанием типов и дефолтов
-env = environ.Env(
-    DEBUG=(bool, False),
-    SECRET_KEY=(str, ''),
-    # можете добавить сразу и другие переменные, если хотите
-)
+env = Env()
 
 # 2) Читаем .env-файл
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# 3) Теперь уже достаём переменные
-DEBUG = env('DEBUG')
+ENVIRONMENT = env('ENVIRONMENT', default='production')
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
+
+
 SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
@@ -84,12 +87,12 @@ WSGI_APPLICATION = 'DJ_Crud_Mvt_For_Test.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -101,7 +104,12 @@ WSGI_APPLICATION = 'DJ_Crud_Mvt_For_Test.wsgi.application'
 #     }
 # }
 
-DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+# DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
